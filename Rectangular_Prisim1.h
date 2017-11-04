@@ -5,6 +5,8 @@
  * Date: October 30, 2017, 6:53 PM
  *
  * Rectangular Prisim uses Quad1 (Triangle fans)
+ *
+ * some code borrowed from StuetzleC's "tectrahedron" (cube class)
  */
 
 #ifndef RECTANGULAR_PRISIM1_H
@@ -15,11 +17,14 @@
 
 #include "Rectangular_Prisim1.h"
 #include "DrawableObject.h"
+#include "Triangle.hpp"
 #include "Texture.hpp"
 #include "Shader.hpp"
+#include "Vertex.hpp"
 #include "Quad1.h"
 
 using glm::vec3;
+class Triangle;
 
 class Rectangular_Prisim1: public DrawableObject
 {
@@ -27,7 +32,7 @@ public:
 	Rectangular_Prisim1();
 	Rectangular_Prisim1(const Rectangular_Prisim1& orig);
 
-	//give the bottom points build a rectangular prisim
+	//give the bottom points build a rectangular prisim, and the depth of the rectangular prisim
 	Rectangular_Prisim1(vec3 _e, vec3 _f, vec3 _b, vec3 _c,float  _depth);
 
 	//additional params: fill color, border color, texture
@@ -38,14 +43,25 @@ public:
 
 	// The draw function
 	void draw(Shader*);//draw the rectangular prisim
-
+	//vec3 getEyeDirection(Camera*, int vertNum = 0 ); //taken from StuetzleC "tetrahedron"
 	virtual ~Rectangular_Prisim1();
 
 private:
+	// some code taken from StuetzleC "tetrahedron" aka code that's been altered to apply to cube
+	//identifiers changed because, why not?
+	Triangle* dasDreieck [12];
+	Vertex* ecken[8]; //f,e,g,h,b,c,d,a
+	float depth;
+	float length;
+	float width;
+	
+	GLuint rp1_VertexArrayObject;
+	Gluint rp1_VertexBufferObject;
+	
 	void buildRectangularPrisim1();
 	void initalizeRemainingPoints(vec3 _e, vec3 _f, vec3 _b, vec3 _c, float _depth);
 	
-	float depth;
+	
 
 	//uses triangle fan to build the quads1
 	Quad1* ein;

@@ -12,6 +12,7 @@
 #ifndef RECTANGULAR_PRISIM1_H
 #define RECTANGULAR_PRISIM1_H
 
+#include <GL/glew.h>
 #include <glm/glm.hpp>
 #include <stdio.h>
 
@@ -31,6 +32,9 @@ class Rectangular_Prisim1: public DrawableObject
 public:
 	Rectangular_Prisim1();
 	Rectangular_Prisim1(const Rectangular_Prisim1& orig);
+	
+	//rectangular prisim that takes in bottom left cornner, length, width, depth, fill color, border color, texture
+	Rectangular_Prisim1(vec3 _f, float _length, float _width, float _depth, vec3 fc, vec3 bc, Texture* tex = NULL);
 
 	//give the bottom points build a rectangular prisim, and the depth of the rectangular prisim
 	Rectangular_Prisim1(vec3 _e, vec3 _f, vec3 _b, vec3 _c,float  _depth);
@@ -60,8 +64,6 @@ private:
 	
 	void buildRectangularPrisim1();
 	void initalizeRemainingPoints(vec3 _e, vec3 _f, vec3 _b, vec3 _c, float _depth);
-	
-	
 
 	//uses triangle fan to build the quads1
 	Quad1* ein;
